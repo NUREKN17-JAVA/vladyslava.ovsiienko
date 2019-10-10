@@ -32,7 +32,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 		assertEquals(FIRST_NAME,userToCheck.getFirstName());
 		assertEquals(LAST_NAME,userToCheck.getLastName());
 		assertEquals(calendar.getTime(),userToCheck.getDateOfBirth());
-	
+
 	}
 	
 	@Override
