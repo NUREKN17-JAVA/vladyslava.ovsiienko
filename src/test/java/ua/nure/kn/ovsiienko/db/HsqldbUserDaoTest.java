@@ -1,8 +1,10 @@
 package ua.nure.kn.ovsiienko.db;
 
+import java.sql.Connection;
 import java.util.Calendar;
 
 import org.dbunit.DatabaseTestCase;
+import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 
@@ -14,6 +16,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
     private static final String LAST_NAME = "Gates";
 	private static final String FIRST_NAME = "Bill";
 	private HsqldbUserDao dao;
+	private ConnectionFactory connectionFactory;
 	private static final int DAY_OF_BIRTH = 1;
 	private static final int MONTH = 1;
 	private static final int YEAR = 2010;
@@ -35,10 +38,15 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
 	}
 	
+	protected void setUp() throws Exception{
+		super.setUp();
+		dao = new HsqldbUserDao(connectionFactory);
+	}
+	
 	@Override
 	protected IDatabaseConnection getConnection() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		connectionFactory = new ConnectionFactoryImpl();
+		return new DatabaseConnection(connectionFactory.getConnection());
 	}
 
 	@Override
