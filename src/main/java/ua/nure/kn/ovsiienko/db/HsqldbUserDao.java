@@ -6,12 +6,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import ua.nure.kn.ovsiienko.domain.User;
 
 public class HsqldbUserDao implements DAO<User> {
 	
+	private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname,lastname,dateofbirth) VALUES (?,?,?)";
 	private ConnectionFactory connectionFactory;
 	
@@ -23,7 +26,7 @@ public class HsqldbUserDao implements DAO<User> {
 	public User create(User entity) throws DatabaseException {
 
 		try {
-			Connection connection = connectionFactory.getConnection();
+			Connection connection = connectionFactory.createConnection();
 			PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
 			statement.setString(1, entity.getFirstName());
 			statement.setString(2, entity.getLastName());
@@ -41,6 +44,8 @@ public class HsqldbUserDao implements DAO<User> {
 			callableStatement.close();
 			statement.close();
 			return entity;
+		}catch (DatabaseException e) {
+			throw e;
 		} catch (SQLException e) {
 			throw new DatabaseException(e);
 		}
@@ -68,8 +73,29 @@ public class HsqldbUserDao implements DAO<User> {
 
 	@Override
 	public Collection<User> findAll() throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<User> result = new LinkedList<>();
+		
+		try {
+			Connection connection = connectionFactory.createConnection();
+			Statement statement = connection.createStatement(); 
+			ResultSet resultSet = statement.executeQuery(SELECT_ALL_QUERY);
+			while (resultSet.next()){
+				User user = new User();
+				user.setId(resultSet.getLong(1));
+		        user.setFirstName(resultSet.getString(2));
+		        user.setLastName(resultSet.getString(3));
+		        user.setDateOfBirth(resultSet.getDate(4));
+		        result.add(user);
+			}
+			resultSet.close();
+			statement.close();
+			return result;
+		} catch(DatabaseException e){
+			throw e;
+		}catch(SQLException e){
+			throw new DatabaseException(e);
+		}
+		
 	}
 
 }
