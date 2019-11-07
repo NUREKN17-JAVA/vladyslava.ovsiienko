@@ -12,8 +12,10 @@
 hs_err_pid*
 
 # Target, bin and settings
-target*
-bin*
-.settings*
+db
+lib
+target
+bin
+.settings
 .classpath
 .project
