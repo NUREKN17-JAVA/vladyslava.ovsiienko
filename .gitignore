@@ -6,6 +6,7 @@ usermanagment/out
 *.txt
 settings*
 
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -22,5 +23,7 @@ target*
 bin*
 .settings*
 .classpath
+
 .project
 Create Table*
+
