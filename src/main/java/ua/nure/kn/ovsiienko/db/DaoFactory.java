@@ -5,7 +5,13 @@ import java.util.Properties;
 
 public class DaoFactory {
 
+	private static final String USER_DAO = "dao.ua.nure.kn.ovsiienko.db.DAO";
 	private final Properties properties;
+	
+	private final static DaoFactory INSTANCE = new DaoFactory();
+	public static DaoFactory getInstance(){
+		return INSTANCE;
+	}
 	
 	public DaoFactory(){
 		properties = new Properties();
@@ -28,9 +34,9 @@ public class DaoFactory {
 	public DAO getUserDao(){
 		DAO result = null;
 		try {
-			Class clazz = Class.forName(properties.getProperty("dao.ua.nure.kn.ovsiienko.db.DAO"));
-			DAO userDao = (DAO) clazz.newInstance();
-			userDao.setConnectionFactory(getConnectionFactory());
+			Class clazz = Class.forName(properties.getProperty(USER_DAO));
+			result = (DAO) clazz.newInstance();
+			result.setConnectionFactory(getConnectionFactory());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
