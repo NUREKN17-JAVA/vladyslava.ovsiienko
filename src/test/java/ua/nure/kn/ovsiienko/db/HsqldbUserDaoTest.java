@@ -24,6 +24,11 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {//DatabaseTestCase
 	private static final int DAY_OF_BIRTH = 1;
 	private static final int MONTH = 1;
 	private static final int YEAR = 2010;
+	
+    private static final String CONNECTIO_USER = "sa";
+    private static final String CONNECTION_PASSWORD = "";
+    private static final String CONNECTION_URL = "jdbc:hsqldb:file:db/usermanagment";
+    private static final String CONNECTION_DRIVER = "org.hsqldb.jdbcDriver";
 
 	public void testCreate() throws DatabaseException{
 		try {
@@ -35,7 +40,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {//DatabaseTestCase
 		calendar.set(YEAR,MONTH,DAY_OF_BIRTH);
 		user.setDateOfBirth(calendar.getTime());
 		
-		assertNull(user.getId());//проверить что создало id usera
+		assertNull(user.getId());
 		
 		User userToCheck = dao.create(user);
 		assertNotNull(userToCheck);
@@ -66,11 +71,11 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {//DatabaseTestCase
 	protected void setUp() throws Exception{
 		super.setUp();
 
-		dao = new HsqldbUserDao(connectionFactory);//empty in ()
+		dao = new HsqldbUserDao(connectionFactory);
 	}
 	@Override
 	protected IDatabaseConnection getConnection() throws Exception {
-		connectionFactory = new ConnectionFactoryImpl();
+		connectionFactory = new ConnectionFactoryImpl(CONNECTIO_USER, CONNECTION_PASSWORD, CONNECTION_URL, CONNECTION_DRIVER);
 		return new DatabaseConnection(connectionFactory.createConnection());
 	}
 	@Override

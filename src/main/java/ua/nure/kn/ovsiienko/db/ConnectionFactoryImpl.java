@@ -7,6 +7,11 @@ import java.sql.SQLException;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
 	
+	private String driver;
+	private String url;
+	private String user;
+	private String password;
+	
     public Connection createConnection() throws DatabaseException{
         //method reflecsia
         String driver= "org.hsqldb.jdbcDriver";
@@ -32,11 +37,11 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
 
    
     
-    public ConnectionFactoryImpl(){
-    	//this.driver = driver;
-    	//this.url = url;
-    	//this.user = user;
-    	//this.password = password;
+    public ConnectionFactoryImpl(String driver2, String url2, String user2, String password2){
+    	this.driver = driver;
+    	this.url = url;
+    	this.user = user;
+    	this.password = password;
     }
 
 
