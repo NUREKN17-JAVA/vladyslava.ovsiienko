@@ -5,43 +5,48 @@ import java.util.Properties;
 
 import ua.nure.kn.ovsiienko.domain.User;
 
-public class DaoFactory {
+public abstract class DaoFactory {
 
-	private static final String USER_DAO = "dao.ua.nure.kn.ovsiienko.db.DAO";
-	private final Properties properties;
+	protected static final String USER_DAO = "dao.ua.nure.kn.ovsiienko.db.DAO";
+	private static final String DAO_FACTORY = "dao.factory";
+	protected static Properties properties;
 	
-	private final static DaoFactory INSTANCE = new DaoFactory();// для 3 лб убрать final
-	public static DaoFactory getInstance(){
-		return INSTANCE;
-	}
+	private static DaoFactory instance;
 	
-	public DaoFactory(){
+	static{
 		properties = new Properties();
 		try {
-			properties.load(getClass().getClassLoader().getResourceAsStream("setting.properties"));
+			properties.load(DaoFactory.class.getClassLoader()
+					.getResourceAsStream("setting.properties"));
 		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	
+			throw new RuntimeException(e);}
 	}
 	
-	private ConnectionFactory getConnectionFactory(){
-		String user = properties.getProperty("connection.user");
-		String password = properties.getProperty("connection.password");
-		String url = properties.getProperty("connection.url");
-		String driver = properties.getProperty("connection.driver");
-		return new ConnectionFactoryImpl(driver,url,user,password);
+	public static synchronized DaoFactory getInstance(){
+		if (instance == null){
+			try{
+				Class factoryClass = Class.forName(properties
+						.getProperty(DAO_FACTORY));
+				instance = (DaoFactory) factoryClass.newInstance();
+			} catch(Exception e){
+				throw new RuntimeException(e);
+			}
+		}
+		return instance;
 	}
 	
-	public DAO<User> getUserDao(){
-		DAO<User> result = null;
-		try {
-			Class clazz = Class.forName(properties.getProperty(USER_DAO));
-			result = (DAO<User>) clazz.newInstance();
-			result.setConnectionFactory(getConnectionFactory());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+	protected DaoFactory(){
 		}
-		return result;
+	
+	
+	protected ConnectionFactory getConnectionFactory(){
+		return new ConnectionFactoryImpl(properties);
+	}
+	
+	public abstract DAO<User> getUserDao();
+	
+	public void init(Properties prop){
+		properties = prop;
+		instance = null;
 	}
 }
