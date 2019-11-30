@@ -7,6 +7,8 @@ import junit.framework.TestCase;
 
 public class UserTest extends TestCase {
 	
+	private static final String LAST_NAME = "Doe";
+	private static final String FIRST_NAME = "John";
 	private static final int YEAR_OF_BIRTH = 2000;
 	private static final int CURRENT_YEAR = 2019;
 	private static final int MONTH_OF_BIRTH= Calendar.MARCH;
@@ -142,21 +144,21 @@ public class UserTest extends TestCase {
 	}
 	/** Test Case №10 Full name has both attributes **/
 	public void testGetFullName1(){
-		user.setFirstName("John");
-		user.setLastName("Doe");
+		user.setFirstName(FIRST_NAME);
+		user.setLastName(LAST_NAME);
 		assertEquals("Doe, John",user.getFullName());
 	}
 	
 	/** Test Case №11 Full name doesn't have firstName **/
 	public void testGetFullName2(){
-		user.setLastName("Doe");
-		assertEquals("Doe",user.getFullName());
+		user.setLastName(LAST_NAME);
+		assertEquals(LAST_NAME,user.getFullName());
 	}
 	
 	/** Test Case №12 Full name doesn't have lastName **/
 	public void testGetFullName3(){
-		user.setFirstName("John");
-		assertEquals("John",user.getFullName());
+		user.setFirstName(FIRST_NAME);
+		assertEquals(FIRST_NAME,user.getFullName());
 	}
 	
 	protected void setUp() throws Exception {
