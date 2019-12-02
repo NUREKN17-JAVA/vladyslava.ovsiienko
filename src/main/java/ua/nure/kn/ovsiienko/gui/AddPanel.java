@@ -1,16 +1,23 @@
 package ua.nure.kn.ovsiienko.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import ua.nure.kn.ovsiienko.db.DatabaseException;
+import ua.nure.kn.ovsiienko.domain.User;
 import ua.nure.kn.ovsiienko.util.Messages;
 
 public class AddPanel extends JPanel implements ActionListener {
@@ -23,6 +30,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JTextField dateOfBirthField;
 	private JTextField lastNameField;
 	private JTextField firstNameField;
+	private Color bgColor = Color.WHITE;
 
 	public AddPanel(MainFrame parent){
 		this.parent = parent;
@@ -74,13 +82,13 @@ public class AddPanel extends JPanel implements ActionListener {
 			fieldPanel.setLayout(new GridLayout(3,2));
 			addLabeledField(fieldPanel,Messages.getString("AddPanel.first_name"),getFirstNameField()); //$NON-NLS-1$
 			addLabeledField(fieldPanel,Messages.getString("AddPanel.last_name"),getLastNameField()); //$NON-NLS-1$
-			addLabeledField(fieldPanel,Messages.getString("AddPanel.date_of_birth"),getDateOfBirthNameField()); //$NON-NLS-1$
+			addLabeledField(fieldPanel,Messages.getString("AddPanel.date_of_birth"),getDateOfBirthField()); //$NON-NLS-1$
 			
 		}
 		return fieldPanel;
 	}
 
-	private JTextField getDateOfBirthNameField() {
+	private JTextField getDateOfBirthField() {
 		if (dateOfBirthField == null){
 			dateOfBirthField = new JTextField();
 			dateOfBirthField.setName("dateOfBirthField"); //$NON-NLS-1$
@@ -114,8 +122,39 @@ public class AddPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if("ok".equalsIgnoreCase(e.getActionCommand())){
+			User user = new User();
+			user.setFirstName(getFirstNameField().getText());
+			user.setLastName(getLastNameField().getText());
+			DateFormat format= DateFormat.getDateInstance();
+			try {
+				Date date = format.parse(getDateOfBirthField().getText());
+				user.setDateOfBirth(date);
+			} catch (ParseException e1) {
+				getDateOfBirthField().setBackground(Color.RED);
+				return;
+			}
+			try {
+				parent.getDao().create(user);
+			} catch (DatabaseException el) {
+				JOptionPane.showMessageDialog(this,el.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		clearFields();
 		this.setVisible(false);
 		parent.showBrowsePanel();
+		
+	}
+
+	private void clearFields() {
+		getFirstNameField().setText("");
+		getFirstNameField().setBackground(bgColor );
+		
+		getLastNameField().setText("");
+		getLastNameField().setBackground(bgColor );
+		
+		getDateOfBirthField().setText("");
+		getDateOfBirthField().setBackground(bgColor );
 		
 	}
 }
