@@ -1,4 +1,4 @@
-package gui;
+package ua.nure.kn.ovsiienko.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
