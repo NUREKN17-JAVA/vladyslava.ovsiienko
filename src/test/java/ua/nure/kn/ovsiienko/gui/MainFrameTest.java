@@ -3,12 +3,16 @@ package ua.nure.kn.ovsiienko.gui;
 import java.awt.Component;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import ua.nure.kn.ovsiienko.db.DaoFactory;
+import ua.nure.kn.ovsiienko.db.DaoFactoryImpl;
+import ua.nure.kn.ovsiienko.db.MockUserDao;
 import ua.nure.kn.ovsiienko.util.Messages;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
@@ -18,12 +22,24 @@ import junit.extensions.jfcunit.finder.NamedComponentFinder;
 
 public class MainFrameTest extends JFCTestCase {
 	
+	private static final String TEST_LAST_NAME = "Doe";
+	private static final String TEST_FIRST_NAME = "John";
 	private MainFrame mainFrame;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
+		
+		Properties properties = new Properties();
+		properties.setProperty("dao.ua.nure.kn.ovsiienko.db.DAO",MockUserDao.class.getName());
+		properties.setProperty("dao.factory",DaoFactoryImpl.class.getName());
+		DaoFactory.getInstance().init(properties);
+		
 		setHelper(new JFCTestHelper());
+		try{
 		mainFrame = new MainFrame();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		mainFrame.setVisible(true);
 	}
 
@@ -70,8 +86,8 @@ public class MainFrameTest extends JFCTestCase {
 		JButton okButton = (JButton)find(JButton.class,"okButton");
 		find(JButton.class,"cancelButton");
 		
-		getHelper().sendString(new StringEventData(this,firstNameField,"John"));
-		getHelper().sendString(new StringEventData(this,lastNameField,"Doe"));
+		getHelper().sendString(new StringEventData(this,firstNameField,TEST_FIRST_NAME));
+		getHelper().sendString(new StringEventData(this,lastNameField,TEST_LAST_NAME));
 		DateFormat formater = DateFormat.getDateInstance();
 		String date = formater.format(new Date());
 		getHelper().sendString(new StringEventData(this,dateOfBirthField,date));
