@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import ua.nure.kn.ovsiienko.util.Messages;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -40,7 +41,11 @@ public class MainFrameTest extends JFCTestCase {
 	
 	public void testBrowseControls(){
 		find(JPanel.class,"browsePanel");
-		find(JTable.class,"userTable");
+		JTable table = (JTable) find(JTable.class,"userTable");
+		assertEquals(3,table.getColumnCount());
+		assertEquals(Messages.getString("UserTableModel.id"),table.getColumnName(0));
+		assertEquals(Messages.getString("UserTableModel.first_name"),table.getColumnName(1));
+		assertEquals(Messages.getString("UserTableModel.last_name"),table.getColumnName(2));
 		find(JButton.class,"addButton");
 		find(JButton.class,"editButton");
 		find(JButton.class,"deleteButton");
