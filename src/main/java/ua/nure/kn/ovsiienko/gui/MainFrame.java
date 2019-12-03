@@ -76,6 +76,7 @@ public class MainFrame extends JFrame {
 		panel.repaint();
 		
 	}
+	
 
 	private AddPanel getAddPanel() {
 		if (addPanel == null){
@@ -83,5 +84,7 @@ public class MainFrame extends JFrame {
 		}
 		return addPanel;
 	}
+	
+
 
 }

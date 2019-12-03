@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import ua.nure.kn.ovsiienko.db.DatabaseException;
+import ua.nure.kn.ovsiienko.domain.User;
 import ua.nure.kn.ovsiienko.util.Messages;
 
 public class BrowsePanel extends JPanel implements ActionListener {
@@ -116,7 +117,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			model = new UserTableModel(parent.getDao().findAll());
 		} catch (DatabaseException e) {
 			model = new UserTableModel(new ArrayList());
-			JOptionPane.showMessageDialog(this,e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this,e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 		}
 		getUserTable().setModel(model);
 	}
@@ -128,7 +129,6 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			this.setVisible(false);
 			parent.showAddPanel();
 		}
-		
 	}
 
 }

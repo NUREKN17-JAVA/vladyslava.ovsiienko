@@ -27,7 +27,7 @@ public class UserTableModel extends AbstractTableModel {
 		return COLUMN_NAMES[column];
 	}
 	
-	@Override
+
 	public int getRowCount() {
 		return users.size();
 	}
@@ -50,5 +50,8 @@ public class UserTableModel extends AbstractTableModel {
 		}
 		return null;
 	}
+	public User getUser(int index) {
+	    return (User) users.get(index);
+	    }
 
 }

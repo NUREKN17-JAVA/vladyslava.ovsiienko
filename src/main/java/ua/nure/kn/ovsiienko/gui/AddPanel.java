@@ -30,7 +30,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JTextField dateOfBirthField;
 	private JTextField lastNameField;
 	private JTextField firstNameField;
-	private Color bgColor = Color.WHITE;
+	private Color bgColor ;
 
 	public AddPanel(MainFrame parent){
 		this.parent = parent;
