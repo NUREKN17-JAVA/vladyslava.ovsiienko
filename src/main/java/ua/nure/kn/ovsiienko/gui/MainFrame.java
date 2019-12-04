@@ -20,6 +20,8 @@ public class MainFrame extends JFrame {
 	private JPanel browsePanel;
 	private AddPanel addPanel;
 	private DAO<User> dao;
+	private EditPanel editPanel;
+	private DetailsPanel detailsPanel;
 	
 	public MainFrame(){
 		super();
@@ -85,6 +87,31 @@ public class MainFrame extends JFrame {
 		return addPanel;
 	}
 	
-
-
+	public void showEditPanel() {
+		showPanel(getEditPanel());
+		
+	}
+	
+	private JPanel getEditPanel() {
+		if (editPanel == null){
+			editPanel = new EditPanel(this);
+		}
+		return editPanel;
+	}
+	public void showDetailsPanel(User user) {
+		JPanel detailsPanel = getDetailsPanel();
+        ((DetailsPanel) detailsPanel).showUserDetails(user);
+        showPanel(detailsPanel);
+		
+	}
+	
+	private JPanel getDetailsPanel() {
+		if (detailsPanel == null){
+			detailsPanel = new DetailsPanel(this);
+		}
+		return detailsPanel;
+	}
+	public User getSelectedUser(){
+		return ((BrowsePanel)browsePanel).getSelectedUser();
+	}
 }

@@ -2,7 +2,6 @@ package ua.nure.kn.ovsiienko.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +21,9 @@ import ua.nure.kn.ovsiienko.util.Messages;
 
 public class AddPanel extends JPanel implements ActionListener {
 	
+	private static final int COLS = 2;
+	private static final int ROWS = 3;
+	private static final long serialVersionUID = 1L;
 	private MainFrame parent;
 	private JPanel buttonPanel;
 	private JPanel fieldPanel;
@@ -40,7 +42,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private void initialize() {
 		this.setName("addPanel"); //$NON-NLS-1$
 		this.setLayout(new BorderLayout());
-		this.add(getFieldPanel(),BorderLayout.SOUTH);
+		this.add(getFieldPanel(),BorderLayout.NORTH);
 		this.add(getButtonPanel(),BorderLayout.SOUTH);
 		
 	}
@@ -79,7 +81,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JPanel getFieldPanel() {
 		if(fieldPanel == null){
 			fieldPanel = new JPanel();
-			fieldPanel.setLayout(new GridLayout(3,2));
+			fieldPanel.setLayout(new GridLayout(ROWS,COLS));
 			addLabeledField(fieldPanel,Messages.getString("AddPanel.first_name"),getFirstNameField()); //$NON-NLS-1$
 			addLabeledField(fieldPanel,Messages.getString("AddPanel.last_name"),getLastNameField()); //$NON-NLS-1$
 			addLabeledField(fieldPanel,Messages.getString("AddPanel.date_of_birth"),getDateOfBirthField()); //$NON-NLS-1$
@@ -122,7 +124,7 @@ public class AddPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if("ok".equalsIgnoreCase(e.getActionCommand())){
+		if("ok".equalsIgnoreCase(e.getActionCommand())){ //$NON-NLS-1$
 			User user = new User();
 			user.setFirstName(getFirstNameField().getText());
 			user.setLastName(getLastNameField().getText());
@@ -137,7 +139,7 @@ public class AddPanel extends JPanel implements ActionListener {
 			try {
 				parent.getDao().create(user);
 			} catch (DatabaseException el) {
-				JOptionPane.showMessageDialog(this,el.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,el.getMessage(),"Error",JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 			}
 		}
 		clearFields();
@@ -147,13 +149,13 @@ public class AddPanel extends JPanel implements ActionListener {
 	}
 
 	private void clearFields() {
-		getFirstNameField().setText("");
+		getFirstNameField().setText(""); //$NON-NLS-1$
 		getFirstNameField().setBackground(bgColor );
 		
-		getLastNameField().setText("");
+		getLastNameField().setText(""); //$NON-NLS-1$
 		getLastNameField().setBackground(bgColor );
 		
-		getDateOfBirthField().setText("");
+		getDateOfBirthField().setText(""); //$NON-NLS-1$
 		getDateOfBirthField().setBackground(bgColor );
 		
 	}

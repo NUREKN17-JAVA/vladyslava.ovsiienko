@@ -110,7 +110,24 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		}
 		return userTable;
 	}
-
+	public User getSelectedUser(){
+		int selectedRow = getUserTable().getSelectedRow();
+		int idColumn = 0;
+		
+		Long userId = null;
+		User user = null;
+		if(selectedRow==-1){
+			JOptionPane.showMessageDialog(this, Messages.getString("BrowsePanel.choosing_user2"),"Error",JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+		} else {
+		userId = (Long) userTable.getValueAt(userTable.getSelectedRow(),idColumn);
+		try{
+			user = parent.getDao().find(userId);
+		}catch(DatabaseException e){
+			JOptionPane.showMessageDialog(this, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
+		}
+		}
+		return user;
+	}
 	public void initTable() {
 		UserTableModel model;
 		try {
@@ -129,6 +146,37 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			this.setVisible(false);
 			parent.showAddPanel();
 		}
+		if("edit".equalsIgnoreCase(actionCommand)){ //$NON-NLS-1$
+			int selectedRow = userTable.getSelectedRow();
+			int selectedColumn = userTable.getSelectedColumn();
+			if (selectedColumn !=-1 || selectedRow!=-1){
+				this.setVisible(false);
+				parent.showEditPanel();
+			}else{
+				JOptionPane.showMessageDialog(this,Messages.getString("BrowsePanel.choosing_user1"),"Error", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			
+		}
+        if ("delete".equalsIgnoreCase(actionCommand)) { //$NON-NLS-1$
+            User selectedUser = getSelectedUser();
+            if (selectedUser != null) {
+                int result = JOptionPane.showConfirmDialog(this, Messages.getString("BrowsePanel.accept_deleting"), //$NON-NLS-1$
+                        "Confirm deleting", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$
+                if (result == JOptionPane.YES_OPTION) {
+                    try {
+                        parent.getDao().delete(selectedUser);
+                        getUserTable().setModel(new UserTableModel(parent.getDao().findAll()));
+                    } catch (DatabaseException ex) {
+                        JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
+                    }
+                }
+            }
+        }
+        if ("details".equalsIgnoreCase(actionCommand)) { //$NON-NLS-1$
+        	User user = getSelectedUser();
+			this.setVisible(false);
+			parent.showDetailsPanel(user);
+        }
 	}
 
 }
