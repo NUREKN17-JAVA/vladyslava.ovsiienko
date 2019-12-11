@@ -16,6 +16,7 @@ public class MockDaoFactory extends DaoFactory {
 		return mockUserDao;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public DAO<User> getUserDao() {
 		return (DAO<User>) mockUserDao.proxy();

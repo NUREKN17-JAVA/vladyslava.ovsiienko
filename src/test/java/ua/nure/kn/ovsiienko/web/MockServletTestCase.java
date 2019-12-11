@@ -1,10 +1,14 @@
 package ua.nure.kn.ovsiienko.web;
 
 import java.util.Properties;
+
+import ua.nure.kn.ovsiienko.db.DaoFactory;
+import ua.nure.kn.ovsiienko.db.MockDaoFactory;
+
 import com.mockobjects.dynamic.Mock;
 import com.mockrunner.servlet.BasicServletTestCaseAdapter;
 
-public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
+public class MockServletTestCase extends BasicServletTestCaseAdapter {
 
 	private Mock mockUserDao;
 	
@@ -16,13 +20,15 @@ public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
 	}
 
 	public void tearDown() throws Exception{
-		mockUserDao.verify();
+		getMockUserDao().verify();
 		super.tearDown();
 	}
 	
 	public void setUp() throws Exception{
 		super.setUp();
 		Properties properties = new Properties();
-		//дописать
+		properties.setProperty("dao.factory", MockDaoFactory.class.getName());
+		DaoFactory.init(properties);
+		setMockUserDao(((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao());
 	}
 }

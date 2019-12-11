@@ -4,7 +4,7 @@ import ua.nure.kn.ovsiienko.domain.User;
 
 public class DaoFactoryImpl extends DaoFactory {
 	
-	@Override
+	@SuppressWarnings("unchecked")
 	public DAO<User> getUserDao(){
 		DAO<User> result = null;
 		try {

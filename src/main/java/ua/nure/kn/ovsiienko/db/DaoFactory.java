@@ -45,7 +45,7 @@ public abstract class DaoFactory {
 	
 	public abstract DAO<User> getUserDao();
 	
-	public void init(Properties prop){
+	public static void init(Properties prop){
 		properties = prop;
 		instance = null;
 	}
