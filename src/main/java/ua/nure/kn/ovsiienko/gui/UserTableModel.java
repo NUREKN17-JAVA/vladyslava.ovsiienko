@@ -32,12 +32,10 @@ public class UserTableModel extends AbstractTableModel {
 		return users.size();
 	}
 
-	@Override
 	public int getColumnCount() {
 		return COLUMN_NAMES.length;
 	}
 
-	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		User user =(User) users.get(rowIndex);
 		switch (columnIndex){

@@ -146,7 +146,7 @@ public class HsqldbUserDao implements DAO<User> {
 	}
 
 	public Collection<User> findAll() throws DatabaseException {
-		Collection<User> result = new LinkedList<>();
+		Collection<User> result = new LinkedList<User>();
 		
 		try {
 			Connection connection = connectionFactory.createConnection();

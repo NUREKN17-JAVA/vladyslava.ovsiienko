@@ -139,7 +139,6 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		getUserTable().setModel(model);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
 		if("add".equalsIgnoreCase(actionCommand)){ //$NON-NLS-1$

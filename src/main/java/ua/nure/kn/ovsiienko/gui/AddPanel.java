@@ -122,7 +122,6 @@ public class AddPanel extends JPanel implements ActionListener {
 		return firstNameField;
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("ok".equalsIgnoreCase(e.getActionCommand())){ //$NON-NLS-1$
 			User user = new User();

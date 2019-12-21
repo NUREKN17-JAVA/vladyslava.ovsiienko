@@ -31,7 +31,6 @@ public class DetailsPanel extends JPanel implements ActionListener {
         initialize();
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         setVisible(false);
         parent.showBrowsePanel();
