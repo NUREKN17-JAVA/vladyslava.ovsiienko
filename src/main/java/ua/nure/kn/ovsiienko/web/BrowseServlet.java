@@ -32,7 +32,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp)
 }
 
 private void details(HttpServletRequest req, HttpServletResponse resp) {
-	// TODO Auto-generated method stub
+	
 	
 }
 
@@ -60,8 +60,8 @@ private void edit(HttpServletRequest req, HttpServletResponse resp) throws Servl
 	
 }
 
-private void add(HttpServletRequest req, HttpServletResponse resp) {
-	// TODO Auto-generated method stub
+private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	req.getRequestDispatcher("/add").forward(req, resp);
 	
 }
 
