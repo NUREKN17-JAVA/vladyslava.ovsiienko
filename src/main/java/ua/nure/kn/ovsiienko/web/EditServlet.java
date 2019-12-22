@@ -27,7 +27,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp)
 	}
 }
 
-private void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+protected void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 	
 }
@@ -87,7 +87,7 @@ private User getUser(HttpServletRequest req) throws ValidationException {
 	return user;
 }
 
-private void processUser(User user) throws DatabaseException {
+protected void processUser(User user) throws DatabaseException {
 	DaoFactory.getInstance().getUserDao().update(user);
 	}
 }
