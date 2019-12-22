@@ -8,7 +8,7 @@
 	<input type="hidden" name="id" value="$(user.id)">
 	First name <input type="text" name="firstName" value="$(user.firstName)"><br>
 	Last Name <input type="text" name="lastName" value="$(user.lastName)"><br>
-	Date of birth <input type="text" name="date" value="<fmt:formatDate value="$(user.dateOfBirth)" type="date" dateStyle="medium" "><br>
+	Date of birth <input type="text" name="date" value="<fmt:formatDate value="$(user.dateOfBirth)" type="date" dateStyle="medium"/>"><br>
 	<input type = "submit" name="okButton" value="Ok">
     <input type = "submit" name="cancelButton" value="Cancel">
 	</form>
