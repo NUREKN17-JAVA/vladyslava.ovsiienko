@@ -16,7 +16,7 @@ public class BrowseServletTest extends MockServletTestCase {
 	}
 	
 	public void testBrowse() {
-		User user = new User(new Long(1000),"John","Doe",new Date());
+		User user = new User(new Long(1000),"Bon","Jovi",new Date());
 		List<User> list = Collections.singletonList(user);
 		getMockUserDao().expectAndReturn("findAll", list);
 		doGet();
@@ -28,7 +28,7 @@ public class BrowseServletTest extends MockServletTestCase {
 	}
 	
 	public void testEdit(){
-		User user = new User(new Long(1000),"John","Doe",new Date());
+		User user = new User(new Long(1000),"Bon","Jovi",new Date());
 		getMockUserDao().expectAndReturn("find", new Long(1000),user);
 		addRequestParameter("editButton","Edit");
 		addRequestParameter("id","1000");
