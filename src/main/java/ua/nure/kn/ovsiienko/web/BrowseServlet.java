@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import ua.nure.kn.ovsiienko.db.DaoFactory;
 import ua.nure.kn.ovsiienko.db.DatabaseException;
 
+
+
 public class BrowseServlet extends HttpServlet {
-@Override
+
 protected void service(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
 	browse(req,resp);
