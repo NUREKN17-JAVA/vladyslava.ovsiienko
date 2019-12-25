@@ -37,7 +37,7 @@ protected void setup() {
 		}
 	}
 	
-	private void showUsers(Collection user){
+	void showUsers(Collection user){
 		//show users
 	}
 }
