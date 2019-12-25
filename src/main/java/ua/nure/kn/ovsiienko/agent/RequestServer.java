@@ -3,6 +3,7 @@ package ua.nure.kn.ovsiienko.agent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import ua.nure.kn.ovsiienko.db.DaoFactory;
@@ -30,7 +31,21 @@ public class RequestServer extends CyclicBehaviour {
 	}
 
 	private Collection parseMessage(ACLMessage message) {
-		// TODO Auto-generated method stub
+		Collection users = new LinkedList();
+		
+		String content = message.getContent();
+		if (content != null){
+			StringTokenizer tokenizer1 = new StringTokenizer(content,";");
+			while(tokenizer1.hasMoreTokens()){
+				String userInfo = tokenizer1.nextToken();
+				StringTokenizer tokenizer2 = new StringTokenizer(userInfo,",");
+				String id = tokenizer2.nextToken();
+				String firstName = tokenizer2.nextToken();
+				String lastName = tokenizer2.nextToken();
+				users.add(new User(new Long(id), firstName, lastName,null));
+				
+			}
+		}
 		return null;
 	}
 
@@ -38,7 +53,7 @@ public class RequestServer extends CyclicBehaviour {
 		ACLMessage reply = message.createReply();
 		
 		String content = message.getContent();
-		StringTokenizer tokenizer = new StringTokenizer(content, ", ");
+		StringTokenizer tokenizer = new StringTokenizer(content, ",");
 		if (tokenizer.countTokens() == 2){
 			String firstName = tokenizer.nextToken();
 			String lastName = tokenizer.nextToken();
@@ -54,9 +69,9 @@ public class RequestServer extends CyclicBehaviour {
 			StringBuffer buffer = new StringBuffer();
 			for (Iterator it = users.iterator(); it.hasNext();){
 				User user = (User) it.next();
-				buffer.append(user.getId()).append(", ");
-				buffer.append(user.getFirstName()).append(", ");
-				buffer.append(user.getLastName()).append(", ");
+				buffer.append(user.getId()).append(",");
+				buffer.append(user.getFirstName()).append(",");
+				buffer.append(user.getLastName()).append(",");
 			}
 			reply.setContent(buffer.toString());
 		}
