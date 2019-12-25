@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import ua.nure.kn.ovsiienko.db.DaoFactory;
 import ua.nure.kn.ovsiienko.db.DatabaseException;
+import jade.core.AID;
 import jade.core.Agent;
 
 public class SearchAgent extends Agent {
@@ -28,7 +29,7 @@ protected void setup() {
 			if (users.size()>0){
 			showUsers(users);
 			} else{
-				//query for other agent
+				addBehaviour(new SearchRequestBehaviour(new AID[] {},firstName,lastName));
 			}
 		}catch(DatabaseException e){
 			throw new SearchException(e);
